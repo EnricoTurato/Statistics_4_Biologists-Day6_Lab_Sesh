@@ -24,7 +24,7 @@ x5_scaled = scale(x5, center = TRUE, scale = TRUE)
 
 oldpar = par(no.readonly = TRUE)
 par(bg = "ivory")
-boxplot(y~method, data = dat, xlab="Method", ylim = c(0, 800),
+boxplot(y~method, data = dat, xlab="Method", ylim = c(0, 1300),
         ylab="CountBee",boxwex=0.35, main = "Boxplot of BeeCount data vs methods", lwd = 2, border= "slategrey", # colour of the box borders
         col = "slategray2", # colour of the inside of the boxes
         col.axis = 'grey20', # colour of the axis numbers 
@@ -52,6 +52,10 @@ sd(x5_scaled)
 m = glm(y ~ x2 +x5 , family="poisson", data = dat)
 summary(m)'
 
+mm = lm (y ~ x9)
+summary(mm)
+
+
 m_scaled = glm(y ~ x2_scaled +x5_scaled , family="poisson", data = dat)
 summary(m_scaled)
 
@@ -74,3 +78,15 @@ dat_high_forest_coverage = dat[dat$forest.>0.66,]
 View(dat_low_forest_coverage)
 View(dat_medium_forest_coverage)
 View(dat_high_forest_coverage)
+
+'plot(x2_scaled, y, las=1, col="darkgrey", pch=16)
+xx = seq(min(x2_scaled), max(x2_scaled), 0.01)
+y_hat = predict(m_nb_scaled, newdata=list(x2_scaled=xx), type="response", se.fit=T)
+lines(xx, y_hat$fit)
+lines(xx, y_hat$fit+1.96*y_hat$se.fit, lty=2)
+lines(xx, y_hat$fit-1.96*y_hat$se.fit, lty=2)
+
+polygon(c(xx, rev(xx)),
+        c(y_hat$fit+1.96*y_hat$se.fit,
+          rev(y_hat$fit-1.96*y_hat$se.fit)),
+        col = rgb(0,1,0,.5), border = FALSE)'
