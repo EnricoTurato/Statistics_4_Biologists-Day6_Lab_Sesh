@@ -219,4 +219,4 @@ lines(newMAP_high, y_hat3, lwd=2, col=3)
 legend("topleft", lty=1, lwd=2, col=1:3, bty="n",
        legend=c("forest_coverage = mean(forest.<=0.33)",
                 "forest_coverage = mean(forest.>0.33 & forest.<=0.66)",
-                "forest_coverage = mean(forest.>=0.66)"))
+                "forest_coverage = mean(forest.>0.66)"))
