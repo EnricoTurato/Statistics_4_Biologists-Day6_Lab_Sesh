@@ -110,10 +110,14 @@ library(MuMIn)
 dat = read.csv("Eulaema.csv")
 head(dat)
 
+mm = lm(Eulaema_nigrita ~ MAP + forest., data = dat)
+hist(residuals(mm))
+hist(dat$Eulaema_nigrita)
 
 m = glm.nb(Eulaema_nigrita ~ MAP + forest., data = dat)
 summary(m)
 
+hist(residuals(m))
 
 1- m$deviance/m$null.deviance
 
@@ -213,6 +217,6 @@ lines(newMAP_medium, y_hat2, lwd=2, col=2)
 lines(newMAP_high, y_hat3, lwd=2, col=3)
 
 legend("topleft", lty=1, lwd=2, col=1:3, bty="n",
-       legend=c("forest_coverage = low",
-                "forest_coverage = medium",
-                "forest_coverage = high"))
+       legend=c("forest_coverage = mean(forest.<=0.33)",
+                "forest_coverage = mean(forest.>0.33 & forest.<=0.66)",
+                "forest_coverage = mean(forest.>=0.66)"))
